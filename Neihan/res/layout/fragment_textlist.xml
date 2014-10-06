@@ -3,10 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="378dp"
-        android:layout_height="wrap_content"
-        android:text="@string/main_tab_item_text" />
+
+    <!-- 标题 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+        <TextView 
+            android:id="@+id/textlist_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/main_tab_item_text"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <!-- 段子列表内容 -->
+
+        <ListView
+            android:id="@+id/textlist_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </ListView>
+        <!-- 快速工具条 -->
+
+        <include
+            android:id="@+id/textlist_quick_tools"
+            layout="@layout/textlist_header_tools" >
+        </include>
+        <!-- 新消息 -->
+
+        <TextView
+            android:id="@+id/textlist_new_notify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#6666ff"
+            android:gravity="center"
+            android:text="30条新信息" />
+    </FrameLayout>
 
 </LinearLayout>

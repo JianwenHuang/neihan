@@ -25,6 +25,9 @@ public class MainActivity extends FragmentActivity implements
 	private RadioGroup radioGroup;
 
 	private List<Fragment> fragments;
+	
+	private FragmentManager manager;
+	private FragmentTransaction transaction;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class MainActivity extends FragmentActivity implements
 		radioGroup = (RadioGroup) findViewById(R.id.main_tab_bar);
 		radioGroup.setOnCheckedChangeListener(this);
 		
+		manager = getSupportFragmentManager();
 
 		fragments = new ArrayList<Fragment>();
 		fragments.add(new TextListFragment());
@@ -43,9 +47,7 @@ public class MainActivity extends FragmentActivity implements
 		fragments.add(new MyFragment());
 
 		Fragment fragment = fragments.get(0);
-
-		FragmentManager manager = getSupportFragmentManager();
-		FragmentTransaction transaction = manager.beginTransaction();
+		transaction = manager.beginTransaction();
 		transaction.replace(R.id.main_fragment, fragment);
 		transaction.commit();
 
@@ -72,9 +74,7 @@ public class MainActivity extends FragmentActivity implements
 			}
 		}
 		Fragment fragment = fragments.get(checkIndex);
-
-		FragmentManager manager = getSupportFragmentManager();
-		FragmentTransaction transaction = manager.beginTransaction();
+		transaction = manager.beginTransaction();
 		transaction.replace(R.id.main_fragment, fragment);
 		transaction.commit();
 		// switch (checkIndex) {

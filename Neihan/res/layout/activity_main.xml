@@ -18,7 +18,7 @@
     <RadioGroup
         android:id="@+id/main_tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/toolbar_bg"
         android:gravity="center"
         android:orientation="horizontal" >
@@ -45,13 +45,13 @@
         <RadioButton
             android:id="@+id/main_tab_item_activity"
             style="@style/main_tab_item"
-             android:drawableTop="@drawable/main_tab_item_activity_bg"
+            android:drawableTop="@drawable/main_tab_item_activity_bg"
             android:text="@string/main_tab_item_activity" />
 
         <RadioButton
             android:id="@+id/main_tab_item_my"
             style="@style/main_tab_item"
-             android:drawableTop="@drawable/main_tab_item_my_bg"
+            android:drawableTop="@drawable/main_tab_item_my_bg"
             android:text="@string/main_tab_item_mine" />
     </RadioGroup>
 
