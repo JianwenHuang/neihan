@@ -89,11 +89,14 @@ public class TextListFragment extends Fragment implements OnClickListener,
 		strings.add("122");
 		strings.add("519");
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, strings);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+				getActivity(),
+				android.R.layout.simple_list_item_1,
+				android.R.id.text1,
+				strings);
 
 		header = inflater.inflate(R.layout.textlist_header_tools,
-				refreshListView, false);
+				listView, false);
 		quickPublish = header.findViewById(R.id.quick_tools_publish);
 		quickPublish.setOnClickListener(this);
 		quickReview = header.findViewById(R.id.quick_tools_review);

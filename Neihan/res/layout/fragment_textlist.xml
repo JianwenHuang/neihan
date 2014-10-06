@@ -6,16 +6,11 @@
 
     <!-- 标题 -->
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textlist_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
-
-        <TextView
-            android:id="@+id/textlist_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/main_tab_item_text" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="@string/main_tab_item_text" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -29,13 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </com.handmark.pulltorefresh.library.PullToRefreshListView>
-        <!--
-        <ListView
-            android:id="@+id/textlist_listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </ListView>
-        -->
         <!-- 快速工具条 -->
 
         <include
