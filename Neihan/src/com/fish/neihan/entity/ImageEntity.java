@@ -9,29 +9,9 @@ import org.json.JSONObject;
  * @author Squirrelfish
  * 
  */
-public class ImageEntity {
-	private int type;
-	private int commentCount;
-	private long groupid;
-	private String content;
+public class ImageEntity extends TextEntity{
 	private ImageUrlList largeImageUrlList;
 	private ImageUrlList middleImageUrlList;
-
-	public int getType() {
-		return type;
-	}
-
-	public int getCommentCount() {
-		return commentCount;
-	}
-
-	public long getGroupid() {
-		return groupid;
-	}
-
-	public String getContent() {
-		return content;
-	}
 
 	public ImageUrlList getLargeImageUrlList() {
 		return largeImageUrlList;
@@ -48,23 +28,23 @@ public class ImageEntity {
 	 * @throws JSONException
 	 */
 	public void parseJson(JSONObject item) throws JSONException {
+		super.parseJson(item);
 		try {
-			type = item.getInt("type");
-
 			JSONObject group = item.getJSONObject("group");
 
-			commentCount = group.getInt("comment_count");
-
-			JSONObject largeImage = group.getJSONObject("large_image");
+			JSONObject largeImage = group.optJSONObject("large_image");
 			largeImageUrlList = new ImageUrlList();
-			largeImageUrlList.parseJson(largeImage);
+			if (largeImage!=null) {
+				largeImageUrlList.parseJson(largeImage);
+			}
+			
 
-			JSONObject middleImage = group.getJSONObject("middle_image");
+			JSONObject middleImage = group.optJSONObject("middle_image");
 			middleImageUrlList = new ImageUrlList();
-			middleImageUrlList.parseJson(middleImage);
-
-			groupid = group.getLong("group_id");
-			content = group.getString("content");
+			if (middleImage!=null) {
+				middleImageUrlList.parseJson(middleImage);
+			}
+			
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
