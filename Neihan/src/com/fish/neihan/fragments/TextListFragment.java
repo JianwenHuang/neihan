@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fish.neihan.R;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import android.graphics.AvoidXfermode.Mode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,7 +31,7 @@ import android.widget.TextView;
  * 
  */
 public class TextListFragment extends Fragment implements OnClickListener,
-		OnScrollListener {
+		OnScrollListener, OnRefreshListener2<ListView> {
 
 	private View quickTools;
 
@@ -53,9 +57,15 @@ public class TextListFragment extends Fragment implements OnClickListener,
 		View titleView = view.findViewById(R.id.textlist_title);
 		titleView.setOnClickListener(this);
 
-		// TODO 获取listview并且设置数据（以后需要用pulltorefresh完善）
-		ListView listView = (ListView) view
+		// TODO 获取listview并且设置数据
+		PullToRefreshListView refreshListView = (PullToRefreshListView) view
 				.findViewById(R.id.textlist_listview);
+		// 设置上拉与下拉的事件监听
+		refreshListView.setOnRefreshListener(this);
+
+		refreshListView
+				.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.BOTH);
+		ListView listView = refreshListView.getRefreshableView();
 
 		List<String> strings = new ArrayList<String>();
 		strings.add("JAVA");
@@ -82,8 +92,8 @@ public class TextListFragment extends Fragment implements OnClickListener,
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, strings);
 
-		header = inflater.inflate(R.layout.textlist_header_tools, listView,
-				false);
+		header = inflater.inflate(R.layout.textlist_header_tools,
+				refreshListView, false);
 		quickPublish = header.findViewById(R.id.quick_tools_publish);
 		quickPublish.setOnClickListener(this);
 		quickReview = header.findViewById(R.id.quick_tools_review);
@@ -178,5 +188,24 @@ public class TextListFragment extends Fragment implements OnClickListener,
 		}
 
 	}
+
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////列表下拉刷新与上拉加载
+	/**
+	 * 从上向下拉动列表，那么就要进行加载新数据的操作
+	 */
+	@Override
+	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+		// 下拉
+		
+	}
+	/**
+	 * 从下向上拉动，那么就要就行加载旧数据的操作
+	 */
+
+	@Override
+	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+		// TODO Auto-generated method stub
+		// 上拉
+	}
 }
