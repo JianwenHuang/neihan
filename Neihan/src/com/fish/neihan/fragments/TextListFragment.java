@@ -21,6 +21,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import android.graphics.AvoidXfermode.Mode;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,6 +48,8 @@ import android.widget.Toast;
  */
 public class TextListFragment extends Fragment implements OnClickListener,
 		OnScrollListener, OnRefreshListener2<ListView> {
+	
+	private static final String TAG="TextListFragment";
 
 	private View quickTools;
 
@@ -78,14 +81,20 @@ public class TextListFragment extends Fragment implements OnClickListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		queue = Volley.newRequestQueue(getActivity());
+		if (queue == null) {
+			queue = Volley.newRequestQueue(getActivity());
+		}
 
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			Log.i(TAG, "--->>>lastTime:"+lastTime);
+			lastTime = savedInstanceState.getLong("lastTime");
+		}
+
 		View view = inflater.inflate(R.layout.fragment_textlist, container,
 				false);
 		// 获取标题控件，增加点击，进行 新消息悬浮框显示的功能
@@ -111,7 +120,10 @@ public class TextListFragment extends Fragment implements OnClickListener,
 
 		listView.addHeaderView(header);
 
-		entities = new ArrayList<TextEntity>();
+		if (entities == null) {
+			entities = new ArrayList<TextEntity>();
+		}
+
 		adapter = new EssayAdapter(getActivity(), entities);
 		listView.setAdapter(adapter);
 
@@ -127,9 +139,19 @@ public class TextListFragment extends Fragment implements OnClickListener,
 	}
 
 	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putLong("lastTime", lastTime);
+	};
+
+	@Override
 	public void onDestroyView() {
 		// TODO Auto-generated method stub
 		super.onDestroyView();
+		this.adapter = null;
+		this.header = null;
+		this.quickTools = null;
+		this.textNofity = null;
 	}
 
 	@Override
